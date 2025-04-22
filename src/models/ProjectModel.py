@@ -35,7 +35,7 @@ class ProjectModel(BaseDataModel):
         return project
 
     async def get_project_or_create_one(self, project_id: str):
-
+# find_one returns dic
         record = await self.collection.find_one({
             "project_id": project_id
         })
@@ -46,7 +46,7 @@ class ProjectModel(BaseDataModel):
             project = await self.create_project(project=project)
 
             return project
-        
+        # to proj model
         return Project(**record)
 
     async def get_all_projects(self, page: int=1, page_size: int=10):

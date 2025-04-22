@@ -4,7 +4,7 @@ from openai import OpenAI
 import logging
 
 class OpenAIProvider(LLMInterface):
-
+# may other providers support same format so api_url
     def __init__(self, api_key: str, api_url: str=None,
                        default_input_max_characters: int=1000,
                        default_generation_max_output_tokens: int=1000,
@@ -20,17 +20,19 @@ class OpenAIProvider(LLMInterface):
         self.generation_model_id = None
 
         self.embedding_model_id = None
-        self.embedding_size = None
+        self.embedding_size = None # vectorDB need for eff index
 
         self.client = OpenAI(
             api_key = self.api_key,
             api_url = self.api_url
         )
-
+# same file name __name__
         self.logger = logging.getLogger(__name__)
 
     def set_generation_model(self, model_id: str):
         self.generation_model_id = model_id
+        # why not in init? if it is i cant change the llm model 
+        # during runtime
 
     def set_embedding_model(self, model_id: str, embedding_size: int):
         self.embedding_model_id = model_id
