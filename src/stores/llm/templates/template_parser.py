@@ -19,7 +19,7 @@ class TemplateParser:
             self.language = language
         else:
             self.language = self.default_language
-
+# in locales: rag, system prompt, dict
     def get(self, group: str, key: str, vars: dict={}):
         if not group or not key:
             return None
@@ -33,11 +33,12 @@ class TemplateParser:
         if not os.path.exists(group_path):
             return None
         
-        # import group module
+        # import group module during runtime, duck typing
         module = __import__(f"stores.llm.templates.locales.{targeted_language}.{group}", fromlist=[group])
 
         if not module:
             return None
-        
+        # get ex. system prompt
         key_attribute = getattr(module, key)
+        # to fill the var in keys
         return key_attribute.substitute(vars)

@@ -14,10 +14,10 @@ nlp_router = APIRouter(
     prefix="/api/v1/nlp",
     tags=["api_v1", "nlp"],
 )
-
+# post : give him data 
 @nlp_router.post("/index/push/{project_id}")
 async def index_project(request: Request, project_id: str, push_request: PushRequest):
-
+# to control data related to proj in db
     project_model = await ProjectModel.create_instance(
         db_client=request.app.db_client
     )
@@ -85,7 +85,7 @@ async def index_project(request: Request, project_id: str, push_request: PushReq
             "inserted_items_count": inserted_items_count
         }
     )
-
+# to make sure there is a data
 @nlp_router.get("/index/info/{project_id}")
 async def get_project_index_info(request: Request, project_id: str):
     
